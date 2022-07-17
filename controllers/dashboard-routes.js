@@ -81,41 +81,41 @@ router.get('/edit/:id', withAuth, (req, res) => {
 });
 
 // CREATE POST
-router.get('/create/', withAuth, (req, res) => {
-    try {
-        const postData = await Post.findAll({
-            where: {
-                user_id: req.session.user_id
-            },
-            attributes: [
-                'id',
-                'title',
-                'content',
-                'created_at'
-            ],
-            included: [
-                {
-                    model: User,
-                    attributes: ['username']
-                },
-                {
-                    model: Comment,
-                    attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
-                    include: {
-                        model: User,
-                        attributes: ['username']
-                    }
-                }
-            ]
-        })
-        const posts = postData.map(post=>post.get({plain:true}))
-        res.render('create-post', {
-            posts,
-            loggedIn:true
-        });
-    } catch (err) {
-        res.status(500).json(err);
-    }
-});
+// router.get('/create/', withAuth, (req, res) => {
+//     try {
+//         const postData = await Post.findAll({
+//             where: {
+//                 user_id: req.session.user_id
+//             },
+//             attributes: [
+//                 'id',
+//                 'title',
+//                 'content',
+//                 'created_at'
+//             ],
+//             included: [
+//                 {
+//                     model: User,
+//                     attributes: ['username']
+//                 },
+//                 {
+//                     model: Comment,
+//                     attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
+//                     include: {
+//                         model: User,
+//                         attributes: ['username']
+//                     }
+//                 }
+//             ]
+//         })
+//         const posts = postData.map(post=>post.get({plain:true}))
+//         res.render('create-post', {
+//             posts,
+//             loggedIn:true
+//         });
+//     } catch (err) {
+//         res.status(500).json(err);
+//     }
+// });
 
 module.exports = router;
