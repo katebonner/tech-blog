@@ -3,7 +3,7 @@ const { User, Post, Comment } = require('../../models');
 const withAuth = require('../../utils/authentication');
 
 // GET ALL USERS
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const userData = await User.findAll({
             attributes: { exclude: ['password'] }
@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
 });
 
 // GET A SINGLE USER AND THEIR POSTS AND COMMENTS FROM ID
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
     try {
         const userData = await User.findOne ({
             attributes: {exclude: ['password']},
@@ -46,7 +46,7 @@ router.get('/:id', (req, res) => {
 });
 
 // POST USER DATA TO CREATE A USER
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
   // expects {username: 'Lernantino', email: 'lernantino@gmail.com', password: 'password1234'}
   try {
       const userData = await User.create({
@@ -67,7 +67,7 @@ router.post('/', (req, res) => {
 });
 
 // POST USER DATA TO LOGIN/ AUTHENTICATE
-router.post('/login', withAuth, (req, res) => {
+router.post('/login', withAuth, async (req, res) => {
   // expects {email: 'lernantino@gmail.com', password: 'password1234'}
   try {
     const userData = await User.findOne({
@@ -110,7 +110,7 @@ router.post('/logout', (req, res) => {
 });
 
 // PUT USER DATA TO UPDATE WHAT IS PASSED THROUGH BY ID
-router.put('/:id', (req, res) => {
+router.put('/:id', async (req, res) => {
   // expects {username: 'Lernantino', email: 'lernantino@gmail.com', password: 'password1234'}
     try {
         const userData = await User.update(req.body, {
@@ -129,7 +129,7 @@ router.put('/:id', (req, res) => {
 });
 
 // POSTS USER DATA TO DELETE USER BY ID
-router.delete('/:id', withAuth, (req, res) => {
+router.delete('/:id', withAuth, async (req, res) => {
     try {
         const userData = await User.destroy({
             where: {id: req.params.id}

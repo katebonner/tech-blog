@@ -3,7 +3,7 @@ const sequelize = require('../config/connection');
 const { Post, User, Comment, Vote } = require('../models');
 
 // RENDER ALL POSTS ON HOMEPAGE
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
     try {
         const postData = await Post.findAll({
             attributes: [
@@ -39,7 +39,7 @@ router.get('/', (req, res) => {
 });
 
 // RENDER SINGLE POST
-router.get('/post/:id', (req, res) => {
+router.get('/post/:id', async (req, res) => {
     try {
         const postData = await Post.findOne({
             where: {id: req.params.id},

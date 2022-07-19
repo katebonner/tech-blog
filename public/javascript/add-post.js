@@ -10,9 +10,7 @@ async function newFormHandler(event) {
         title,
         content
       }),
-      headers: {
-        'Content-Type': 'application/json'
-      }
+      headers: {'Content-Type': 'application/json'}
     });
   
     if (response.ok) {

@@ -1,10 +1,10 @@
 const router = require('express').Router();
 const sequelize = require('../../config/connection');
 const { Post, User, Comment } = require('../../models');
-const withAuth = require('../../utils/auth');
+const withAuth = require('../../utils/authentication');
 
 // GET ALL POSTS
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
   try {
       const postData = await Post.findAll({
         attributes: [
@@ -35,7 +35,7 @@ router.get('/', (req, res) => {
 });
 
 // GET POST AND ITS COMMENTS AND USER NAME BY ID
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
     try {
         const postData = await Post.findOne({
             where: {
@@ -73,7 +73,7 @@ router.get('/:id', (req, res) => {
 });
 
 // POST POST DATA TO CREATE A POST
-router.post('/', withAuth, (req, res) => {
+router.post('/', withAuth, async (req, res) => {
   // expects {title: 'blah blah blah', content: 'blah blah blah', user_id: 1}
   try {
       const postData = await Post.create({
@@ -89,7 +89,7 @@ router.post('/', withAuth, (req, res) => {
 });
 
 // PUT POST DATA TO UPDATE A POST
-router.put('/:id', withAuth, (req, res) => {
+router.put('/:id', withAuth, async (req, res) => {
     try {
         const postData = await Post.update(
             {
@@ -111,7 +111,7 @@ router.put('/:id', withAuth, (req, res) => {
 });
 
 // DELETE POST BY ID
-router.delete('/:id', withAuth, (req, res) => {
+router.delete('/:id', withAuth, async (req, res) => {
     try {
         const postData = await Post.destroy({
             where: {id: req.params.id}

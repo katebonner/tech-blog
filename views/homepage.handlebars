@@ -1,0 +1,10 @@
+{{#if posts.length}}
+  {{#each posts as |post|}}
+  <div>
+    {{> post-data post }}
+  </div>
+  {{/each}}
+{{else}}
+    <h1>no posts exist yet</h1>
+{{/if}}
+

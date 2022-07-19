@@ -1,9 +1,9 @@
 const router = require('express').Router();
 const { Comment } = require('../../models');
-const withAuth = require('../../utils/auth');
+const withAuth = require('../../utils/authentication');
 
 // GET ALL COMMENTS
-router.get('/', (req, res) => {
+router.get('/', async (req, res) => {
     try{
         const commentData = await Comment.findAll();
         res.status(200).json(commentData);
@@ -13,7 +13,7 @@ router.get('/', (req, res) => {
 });
 
 // POST COMMENT
-router.post('/', withAuth, (req, res) => {
+router.post('/', withAuth, async (req, res) => {
   // expects => {comment_text: "This is the comment", user_id: 1, post_id: 2}
   try {
     const commentData = await Comment.create({
@@ -28,7 +28,7 @@ router.post('/', withAuth, (req, res) => {
 });
 
 // DELETE COMMENT
-router.delete('/:id', withAuth, (req, res) => {
+router.delete('/:id', withAuth, async (req, res) => {
     try {
         const commentData = await Comment.destroy({
             where: {id: req.params.id}

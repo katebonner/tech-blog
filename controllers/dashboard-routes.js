@@ -1,10 +1,10 @@
 const router = require('express').Router();
 const sequelize = require('../config/connection');
 const { Post, User, Comment } = require('../models');
-const withAuth = require('../utils/auth');
+const withAuth = require('../utils/authentication');
 
 // RENDER ALL POSTS ON DASHBOARD
-router.get('/', withAuth, (req, res) => {
+router.get('/', withAuth, async (req, res) => {
     try {
         const postData = await Post.findAll({
             where: {
@@ -42,7 +42,7 @@ router.get('/', withAuth, (req, res) => {
 });
 
 // RENDER 1 POST BY ID TO EDIT IT
-router.get('/edit/:id', withAuth, (req, res) => {
+router.get('/edit/:id', withAuth, async (req, res) => {
     try {
         const postData = await Post.findByPk(req.params.id, {
             attributes: [
