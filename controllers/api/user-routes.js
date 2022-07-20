@@ -75,7 +75,10 @@ router.post('/login', withAuth, async (req, res) => {
             email: req.body.email
           }
     });
-    res.status(200).json(userData);
+    if(!userData){
+      res.status(400).json({message:'no user with this email address foun'})
+      return;
+    }
 
     const validPassword = userData.checkPassword(req.body.password);
 
